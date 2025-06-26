@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{{ PRODUCT_NAME }}}</title>
+    <link rel="stylesheet" type="text/css" href="./styles/global.css">
+  </head>
+  <body style="text-align: center"> 
+    <canvas id="unity-canvas" style="background: url('Build/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') no-repeat center center fixed"></canvas>
+    <body>
+      <div id="loader">
+        <img class="logo" src="logo.png">
+        <div class="spinner"></div>
+        <div class="progress"><div class="full"></div></div>
+      </div>
+    </body>
+
+    <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+    <script>
+      var buildUrl = "Build";
+      var config = {
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+      #if MEMORY_FILENAME
+        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+      #endif
+      #if SYMBOLS_FILENAME
+        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+      #endif
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "{{{ COMPANY_NAME }}}",
+        productName: "{{{ PRODUCT_NAME }}}",
+        productVersion: "{{{ PRODUCT_VERSION }}}",
+      };
+
+      var gameInstance = createUnityInstance(
+        document.querySelector("#unity-canvas"),
+        config,
+        UnityProgress);
+
+      function UnityProgress(progress) {
+        var loader = document.querySelector("#loader");
+        var loaderProgress = document.querySelector("#loader .progress");
+
+        var progressBar = loader.querySelector(".full");
+        
+        loaderProgress.style.display = "block";
+        progressBar = loaderProgress.querySelector(".full");
+        loader.querySelector(".spinner").style.display = "none";
+        progressBar.style.transform = `scaleX(${progress})`;
+
+        if (progress === 1) {
+          loader.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>
