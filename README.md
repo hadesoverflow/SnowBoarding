@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀**Itch.io Deploy: https://hades12-01.itch.io/snowboarding
+## 🚀**Itch.io Deploy**: https://hades12-01.itch.io/snowboarding
 
 ---
 
